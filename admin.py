@@ -1,10 +1,11 @@
 import pymongo as mg
 import sys
 
-port1 = 32771
-port2 = 32771
+port1 = 30001
+port2 = 30002
+port3 = 30003
 
-def insert():
+def insert(num):
   # connect to mongoDB
   client = mg.MongoClient('localhost',port1)
   print 'MongoClient',client
@@ -24,16 +25,24 @@ def insert():
   #print collection_list #unicode
 
   # insert document to collection
-  user = {'name':'Jackie','age':27}
+  user = {'No':num}
   db['user1'].insert_one(user)
 
 def check():
-  # connect to mongoDB
-  client = mg.MongoClient('localhost',port2)
+  # connect to secondary DB1
+  client1 = mg.MongoClient('localhost',port2)
 
-  db = client['test']
-  collection = db['user1']
-  for doc in collection.find({'age':{'$lte':50}}):
+  db1 = client1['test']
+  collection1 = db1['user1']
+  for doc in collection1.find({'No':{'$lte':50}}):
+    print doc
+
+  # connect to secondary DB2
+  client2 = mg.MongoClient('localhost',port3)
+
+  db2 = client2['test']
+  collection2 = db2['user1']
+  for doc in collection2.find({'No':{'$lte':50}}):
     print doc
 
 if __name__=="__main__":
@@ -43,6 +52,6 @@ if __name__=="__main__":
   arg_list = sys.argv
   #print arg_list
 
-  if arg_list[1]=='1': insert()
+  if arg_list[1]=='1': insert(int(arg_list[2]))
   elif arg_list[1]=='2': check()
 
