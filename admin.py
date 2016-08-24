@@ -154,12 +154,6 @@ if __name__=="__main__":
   arg_list = sys.argv
   #print arg_list
 
-  if arg_list[1]=='1': _ = insert(int(arg_list[2]))
-  elif arg_list[1]=='2': check()
-  elif arg_list[1]=='3': verify(int(arg_list[2]))
-  elif arg_list[1]=='4': _ = update()
-  elif arg_list[1]=='5': verify_update()
-
   if len(arg_list)==1:
     print 'python admin.py MODE [Insert Value]'
     print 'MODE'
@@ -168,3 +162,11 @@ if __name__=="__main__":
     print '3: Verify Mode'
     print '4: Update Mode'
     print '5: Verify Update Mode'
+    
+  else:
+    if arg_list[1]=='1': _ = insert(int(arg_list[2]))
+    elif arg_list[1]=='2': check()
+    elif arg_list[1]=='3': verify(int(arg_list[2]))
+    elif arg_list[1]=='4': _ = update()
+    elif arg_list[1]=='5': verify_update()
+
