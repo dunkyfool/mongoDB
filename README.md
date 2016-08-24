@@ -2,6 +2,8 @@
 
 ## Update
 * Verify function (Please refer to "How to build it" section)
+* Update function (Please refer to "How to build it" section)
+* Verify-update function (Please refer to "How to build it" section)
 
 ## Outline
 * Purpose
@@ -67,11 +69,17 @@ Use admin.py to verify.
 # insert mode
 python admin.py 1 20
 
-# check mode
+# check mode (check value less than 50)
 python admin.py 2
 
-# verify mode
+# verify mode (verify insert document is backup correctly)
 python admin.py 3 20
+
+# update mode (select value less than 50 and add 10)
+python admin.py 4 
+
+# verify update mode (verify update document(s) is backup correctly)
+python admin.py 5 20
 ```
 
 ## Reference
