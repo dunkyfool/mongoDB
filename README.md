@@ -69,9 +69,10 @@ python admin.py 1 20
 
 # check mode
 python admin.py 2
-```
+
 # verify mode
 python admin.py 3 20
+```
 
 ## Reference
 http://www.sohamkamani.com/blog/2016/06/30/docker-mongo-replica-set/
