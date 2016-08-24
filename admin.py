@@ -31,6 +31,17 @@ def insert(num):
   #print _id
   return _id
 
+def update():
+  db = mg.MongoClient('localhost',port1)
+  _id_list = []
+  for doc in db['test']['user1'].find({'No':{'$lte':50}}):
+    #print doc['_id'], type(doc['_id'])
+    _id = doc['_id']
+    value = doc['No']
+    db['test']['user1'].update({'_id':_id},{'$set':{'No':value+10}})
+    _id_list += [_id]
+  return _id_list
+
 def check():
   # connect to secondary DB1
   client1 = mg.MongoClient('localhost',port2)
@@ -85,6 +96,37 @@ def verify(num):
   else:
     print 'Secondary2 FAIL to backup'
 
+def verify_update():
+  _id_list = update()
+
+  prime = mg.MongoClient('localhost',port1)
+  sec1 = mg.MongoClient('localhost',port2)
+  sec2 = mg.MongoClient('localhost',port3)
+
+  for _id in _id_list:
+      origin_data = []
+      bak1 = []
+      bak2 = []
+      for doc in prime['test']['user1'].find({'_id':_id}):
+        origin_data += [doc]
+      for doc in sec1['test']['user1'].find({'_id':_id}):
+        bak1 += [doc]
+      for doc in sec2['test']['user1'].find({'_id':_id}):
+        bak2 += [doc]
+
+      #print origin_data
+      #print bak1
+      #print bak2
+      print 'ObjectID', _id
+      if origin_data == bak1:
+        print 'Secondary1 backup successfully'
+      else:
+        print 'Secondary1 FAIL to backup'
+      if origin_data == bak2:
+        print 'Secondary2 backup successfully'
+      else:
+        print 'Secondary2 FAIL to backup'
+
 if __name__=="__main__":
   pass
 
@@ -95,4 +137,6 @@ if __name__=="__main__":
   if arg_list[1]=='1': _ = insert(int(arg_list[2]))
   elif arg_list[1]=='2': check()
   elif arg_list[1]=='3': verify(int(arg_list[2]))
+  elif arg_list[1]=='4': _ = update()
+  elif arg_list[1]=='5': verify_update()
 
