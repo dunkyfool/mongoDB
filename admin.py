@@ -7,6 +7,10 @@ port2 = 30002
 port3 = 30003
 
 def insert(num):
+  '''
+  1. insert num as new document
+  2. return new document's ObjectID
+  '''
   # connect to mongoDB
   client = mg.MongoClient('localhost',port1)
   #print 'MongoClient',client
@@ -32,6 +36,11 @@ def insert(num):
   return _id
 
 def update():
+  '''
+  1. find all document(s), whose No less or equal to 50
+  2. update selected document(s) by increasing 10
+  3. return updated document(s) ObjectID
+  '''
   db = mg.MongoClient('localhost',port1)
   _id_list = []
   for doc in db['test']['user1'].find({'No':{'$lte':50}}):
@@ -43,6 +52,9 @@ def update():
   return _id_list
 
 def check():
+  '''
+  print out document(s), whose No less or equal to 50
+  '''
   # connect to secondary DB1
   client1 = mg.MongoClient('localhost',port2)
 
@@ -61,6 +73,10 @@ def check():
     print type(doc)
 
 def verify(num):
+  '''
+  1. insert num
+  2. use returned ObjectID to verify consistency
+  '''
   # insert 
   print 'Insert value',num
   _id = insert(num)
@@ -97,6 +113,10 @@ def verify(num):
     print 'Secondary2 FAIL to backup'
 
 def verify_update():
+  '''
+  1. update
+  2. use returned id list to verify consistency
+  '''
   _id_list = update()
 
   prime = mg.MongoClient('localhost',port1)
@@ -140,3 +160,11 @@ if __name__=="__main__":
   elif arg_list[1]=='4': _ = update()
   elif arg_list[1]=='5': verify_update()
 
+  if len(arg_list)==1:
+    print 'python admin.py MODE [Insert Value]'
+    print 'MODE'
+    print '1: Insert Mode'
+    print '2: Check Mode'
+    print '3: Verify Mode'
+    print '4: Update Mode'
+    print '5: Verify Update Mode'
