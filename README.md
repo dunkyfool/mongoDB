@@ -66,10 +66,10 @@ rs.initiate(config)
 Use admin.py to verify.
 ```
 # python admin.py MODE INSERT-VALUE
-# insert mode
+# insert mode (insert 20 to primeDB)
 python admin.py 1 20
 
-# check mode (check value less than 50)
+# check mode (print out value less than 50)
 python admin.py 2
 
 # verify mode (verify insert document is backup correctly)
@@ -79,7 +79,7 @@ python admin.py 3 20
 python admin.py 4 
 
 # verify update mode (verify update document(s) is backup correctly)
-python admin.py 5 20
+python admin.py 5 
 ```
 
 ## Reference
